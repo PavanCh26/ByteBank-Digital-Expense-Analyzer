@@ -1,88 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ByteBank - Digital Expense Analyzer</title>
-<style>
-body { font-family: Arial; margin: 20px; background: #f4f4f4; }
-h1 { color: #0077cc; }
-.section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 10px; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-th { background-color: #0077cc; color: white; }
-canvas { max-width: 600px; margin-top: 20px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteBank - Digital Expense Analyzer</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #f4f4f4; color: #333; }
+        h1 { color: #0077cc; }
+        .section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 10px; box-shadow: 1px 2px 6px rgba(0,0,0,0.1); }
+        a.button { display: inline-block; margin-top: 10px; padding: 10px 15px; background: #0077cc; color: white; text-decoration: none; border-radius: 5px; }
+        a.button:hover { background: #005fa3; }
+    </style>
 </head>
 <body>
+    <h1>ByteBank - Digital Expense Analyzer</h1>
 
-<h1>ByteBank - Digital Expense Analyzer</h1>
+    <div class="section">
+        <h2>About</h2>
+        <p>This is a console-based Python application to manage personal expenses. You can:</p>
+        <ul>
+            <li>Add, update, and delete expenses</li>
+            <li>Filter expenses by category or date</li>
+            <li>View reports, totals, and summary dashboards</li>
+            <li>Export expenses to CSV for further analysis</li>
+        </ul>
+    </div>
 
-<div class="section">
-<h2>Expenses Table</h2>
-<input type="file" id="csvFile" accept=".csv">
-<table id="expenseTable">
-<thead>
-<tr><th>Name</th><th>Category</th><th>Amount</th><th>Date</th></tr>
-</thead>
-<tbody></tbody>
-</table>
-</div>
+    <div class="section">
+        <h2>Run Instructions</h2>
+        <p>Since this is a Python console application, follow these steps:</p>
+        <ol>
+            <li>Clone the repository.</li>
+            <li>Install Python or use a mobile Python app (Pydroid 3 / Pythonista).</li>
+            <li>Run <code>main.py</code> to start the application.</li>
+        </ol>
+    </div>
 
-<div class="section">
-<h2>Summary</h2>
-<p id="summary"></p>
-<canvas id="categoryChart"></canvas>
-</div>
+    <div class="section">
+        <h2>GitHub Repository</h2>
+        <!-- Replace YourActualUsername with your GitHub username -->
+        <a class="button" href="https://github.com/YourActualUsername/ByteBank-Digital-Expense-Analyzer" target="_blank">Open Repo</a>
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-document.getElementById('csvFile').addEventListener('change', function(e){
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e){
-        const text = e.target.result;
-        const rows = text.trim().split('\n').map(r => r.split(','));
-        const headers = rows[0];
-        const data = rows.slice(1).map(r => ({
-            name: r[0],
-            category: r[1],
-            amount: parseFloat(r[2]),
-            date: r[3]
-        }));
-
-        // Fill table
-        const tbody = document.querySelector('#expenseTable tbody');
-        tbody.innerHTML = '';
-        data.forEach(d => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${d.name}</td><td>${d.category}</td><td>${d.amount}</td><td>${d.date}</td>`;
-            tbody.appendChild(tr);
-        });
-
-        // Summary
-        const amounts = data.map(d => d.amount);
-        const total = amounts.reduce((a,b)=>a+b,0).toFixed(2);
-        const max = Math.max(...amounts).toFixed(2);
-        const min = Math.min(...amounts).toFixed(2);
-        const avg = (total/amounts.length).toFixed(2);
-        document.getElementById('summary').innerHTML = 
-            `Total: $${total} | Max: $${max} | Min: $${min} | Average: $${avg}`;
-
-        // Category chart
-        const catTotals = {};
-        data.forEach(d => { catTotals[d.category] = (catTotals[d.category]||0) + d.amount; });
-        const ctx = document.getElementById('categoryChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: { labels: Object.keys(catTotals), datasets: [{ label: 'Category Totals', data: Object.values(catTotals), backgroundColor: '#0077cc' }] },
-            options: { responsive: true }
-        });
-    };
-    reader.readAsText(file);
-});
-</script>
-
+    <div class="section">
+        <h2>GitHub Pages</h2>
+        <!-- Replace YourActualUsername with your GitHub username -->
+        <a class="button" href="https://YourActualUsername.github.io/ByteBank-Digital-Expense-Analyzer/" target="_blank">View GitHub Pages</a>
+    </div>
 </body>
 </html>
